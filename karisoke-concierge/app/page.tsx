@@ -4,438 +4,536 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const photos = [
+const phone = "250789162022";
+
+function whatsapp(message: string) {
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+const slides = [
   {
-    title: "A closer connection to nature",
-    label: "Gorillas",
-    description:
-      "Let a fascination with gorillas inspire a forest adventure as part of your Rwanda journey.",
     image: "/images/gorillas.jpeg",
-    alt: "An adult gorilla with a young gorilla in green vegetation",
-    category: "Primates",
+    alt: "An adult gorilla and a young gorilla in green vegetation",
+    eyebrow: "Welcome to the land of a thousand hills",
+    title: "Discover Rwanda. We organize the details.",
+    description:
+      "Hotels, transport, tours, and personal travel assistance. Build a journey around what matters to you.",
+    position: "center 55%",
   },
   {
-    title: "Take the scenic route",
-    label: "Elephants",
-    description:
-      "Make time for a safari experience, quiet observation, and the possibility of unforgettable wildlife encounters.",
     image: "/images/elephant.jpeg",
     alt: "An elephant walking along a dirt track",
-    category: "Safari wildlife",
+    eyebrow: "Make room for adventure",
+    title: "Your next story starts in the wild.",
+    description:
+      "Let wildlife inspire your itinerary. We help coordinate your transport, accommodation, and experiences.",
+    position: "center 55%",
   },
   {
-    title: "Let the wild set the pace",
-    label: "Giraffes & zebras",
-    description:
-      "Bring your camera and your curiosity for a journey inspired by open landscapes and remarkable animals.",
     image: "/images/giraffes.jpeg",
-    alt: "Giraffes and zebras standing in green grassland",
-    category: "Safari wildlife",
+    alt: "Giraffes and zebras in green grassland",
+    eyebrow: "Travel at your own pace",
+    title: "More discovery. Less organizing.",
+    description:
+      "From your first arrival to your final day, bring your ideas and let us help bring the details together.",
+    position: "center 60%",
   },
   {
-    title: "Extraordinary moments await",
-    label: "Lions",
-    description:
-      "Discover the appeal of a guided wildlife adventure, where every outing offers something different.",
     image: "/images/lions.jpeg",
-    alt: "A group of lions resting together in grassland",
-    category: "Safari wildlife",
+    alt: "A group of lions resting in grassland",
+    eyebrow: "Follow your curiosity",
+    title: "Leave space for extraordinary moments.",
+    description:
+      "Create a personal Rwanda journey with time for nature, exploration, and a little relaxation.",
+    position: "center 65%",
   },
   {
-    title: "Find wonder in the wild",
-    label: "Buffalo",
-    description:
-      "Slow down and appreciate the smaller details, from animals moving together to birds sharing their surroundings.",
     image: "/images/buffalo.jpeg",
-    alt: "Buffalo surrounded by white birds in tall grass",
-    category: "Safari wildlife",
+    alt: "Buffalo surrounded by white birds",
+    eyebrow: "A personal connection to Rwanda",
+    title: "Your journey. Thoughtfully arranged.",
+    description:
+      "One local contact to help you explore your options and coordinate the travel services you need.",
+    position: "center 55%",
   },
 ];
-
-const filters = ["All wildlife", "Primates", "Safari wildlife"];
 
 const services = [
   {
     number: "01",
-    title: "Find your perfect stay",
+    title: "Hotel & accommodation booking",
     description:
-      "Get help choosing accommodation around your itinerary, preferences, and budget.",
+      "Find a stay that fits your itinerary, preferences, and budget.",
   },
   {
     number: "02",
-    title: "Move with ease",
+    title: "Airport pickup & drop-off",
     description:
-      "Plan airport pickups and transport between the places you want to explore.",
+      "Plan your arrival and departure with pre-arranged airport transport.",
   },
   {
     number: "03",
-    title: "Make the journey yours",
+    title: "Private car & driver",
     description:
-      "Bring your interests and ideas. We’ll help you shape a personal Rwanda itinerary.",
+      "Coordinate transport around your schedule and the places you want to visit.",
+  },
+  {
+    number: "04",
+    title: "Tours & wildlife experiences",
+    description:
+      "Discuss guided activities and wildlife experiences that fit your interests.",
+  },
+  {
+    number: "05",
+    title: "Personalized itineraries",
+    description:
+      "Bring your travel ideas together into a practical, personal plan.",
+  },
+  {
+    number: "06",
+    title: "Dining & local experiences",
+    description:
+      "Include time for food, culture, and experiences beyond your accommodation.",
   },
 ];
 
-const buttonStyle =
-  "inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4";
+const destinations = [
+  {
+    name: "Kigali",
+    theme: "City & culture",
+    description:
+      "Make time for city exploration, art, dining, and local experiences.",
+  },
+  {
+    name: "Musanze",
+    theme: "Mountains & adventure",
+    description:
+      "Consider a mountain-focused stay and discuss the activities you want to include.",
+  },
+  {
+    name: "Lake Kivu",
+    theme: "Lakeside relaxation",
+    description:
+      "Slow the pace with a lakeside stay and time to unwind.",
+  },
+  {
+    name: "Nyungwe",
+    theme: "Forest & nature",
+    description:
+      "Shape a nature-focused escape around forest scenery and guided activities.",
+  },
+];
+
+const packages = [
+  {
+    duration: "3-day idea",
+    title: "A taste of Kigali",
+    description:
+      "A relaxed introduction to the city with room for your own interests.",
+    details: [
+      "Airport transfer coordination",
+      "Accommodation planning",
+      "City and dining experiences",
+    ],
+  },
+  {
+    duration: "5-day idea",
+    title: "Nature & discovery",
+    description:
+      "A starting point for travelers who want nature at the heart of their trip.",
+    details: [
+      "A personalized route",
+      "Transport and accommodation",
+      "Activities discussed with you",
+    ],
+  },
+  {
+    duration: "7-day idea",
+    title: "Rwanda at your pace",
+    description:
+      "Combine exploration with slower days, shaped around your travel style.",
+    details: [
+      "A flexible multi-stop itinerary",
+      "Stays matched to your preferences",
+      "A mix of activities and downtime",
+    ],
+  },
+];
+
+const steps = [
+  {
+    title: "Tell us what you need",
+    description:
+      "Share your dates, group size, interests, and the support you want—from an airport pickup to a complete journey.",
+  },
+  {
+    title: "We prepare your Rwanda travel plan",
+    description:
+      "We bring together accommodation, transport, experiences, and practical details for you to review.",
+  },
+  {
+    title: "We confirm the arrangements",
+    description:
+      "Discuss availability, costs, and booking terms before approving the arrangements for your visit.",
+  },
+];
+
+const button =
+  "inline-flex min-h-12 items-center justify-center rounded px-5 py-3 text-center text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4";
+
+const eyebrow =
+  "text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-[#907025]";
+
+const sectionHeading =
+  "mt-4 font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl";
 
 export default function Home() {
-  const [activePhoto, setActivePhoto] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [filter, setFilter] = useState("All wildlife");
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const selectedPhoto = photos[activePhoto];
+  const slide = slides[activeSlide];
 
-  const visiblePhotos = photos.filter(
-    (photo) => filter === "All wildlife" || photo.category === filter
-  );
-
-  // Respect visitors who prefer reduced motion.
+  // Automatically change slides every three seconds.
   useEffect(() => {
-    const preference = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-
-    setIsPlaying(!preference.matches);
-
-    const handleChange = () => {
-      if (preference.matches) {
-        setIsPlaying(false);
-      }
-    };
-
-    preference.addEventListener("change", handleChange);
-
-    return () => {
-      preference.removeEventListener("change", handleChange);
-    };
-  }, []);
-
-  // Advance the slideshow every six seconds.
-  useEffect(() => {
-    if (!isPlaying) return;
-
     const timer = window.setInterval(() => {
       if (!document.hidden) {
-        setActivePhoto((current) => (current + 1) % photos.length);
+        setActiveSlide((current) => (current + 1) % slides.length);
       }
-    }, 6000);
+    }, 3000);
 
     return () => window.clearInterval(timer);
-  }, [isPlaying]);
+  }, []);
 
-  function showSlide(index: number) {
-    setIsPlaying(false);
-    setActivePhoto((index + photos.length) % photos.length);
+  function selectSlide(index: number) {
+    setActiveSlide((index + slides.length) % slides.length);
   }
 
   return (
-    <main className="bg-white text-emerald-950">
-      {/* HERO */}
-      <section className="bg-emerald-950 text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
-          <div className="min-w-0">
-            <p className="text-sm font-semibold uppercase tracking-widest text-amber-300">
-              Rwanda, at your own pace
+    <main className="min-w-0 bg-[#faf9f5] text-[#173d25]">
+      {/* HERO SLIDESHOW */}
+      <section
+        aria-label="Discover Rwanda"
+        aria-roledescription="carousel"
+        className="relative isolate overflow-hidden bg-[#173d25] text-white"
+      >
+        <Image
+          key={slide.image}
+          src={slide.image}
+          alt=""
+          fill
+          unoptimized
+          loading="eager"
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: slide.position }}
+        />
+
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(12,42,23,.94) 0%, rgba(12,42,23,.76) 48%, rgba(12,42,23,.24) 100%)",
+          }}
+        />
+
+        <div className="relative mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 py-14 sm:min-h-[620px] sm:px-6 sm:py-16 lg:min-h-[730px] lg:px-8 lg:py-20">
+          <div
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${activeSlide + 1} of ${slides.length}`}
+            aria-live="off"
+            className="min-w-0 max-w-3xl"
+          >
+            <span className="sr-only">{slide.alt}</span>
+
+            <p className="text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-[#e4bc64]">
+              {slide.eyebrow}
             </p>
 
-            <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-6xl xl:text-7xl">
-              A little closer
-              <br />
-              to the{" "}
-              <span className="text-amber-300">
-                extraordinary.
-              </span>
+            <h1 className="mt-6 max-w-3xl font-serif text-[clamp(2.25rem,6vw,6rem)] font-bold leading-[1.08] tracking-tight [overflow-wrap:anywhere]">
+              {slide.title}
             </h1>
 
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-emerald-100">
-              Discover Rwanda with a personal concierge to help arrange
-              your stays, transport, and experiences. You bring the
-              curiosity. We help with the details.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/90 sm:text-lg lg:text-xl">
+              {slide.description}
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#experiences"
-                className={`${buttonStyle} bg-amber-300 text-emerald-950 hover:bg-amber-200`}
-              >
-                Find your inspiration
-              </a>
-
-              <Link
-                href="/services"
-                className={`${buttonStyle} border border-white/40 hover:bg-white/10`}
-              >
-                Explore our services
-              </Link>
-            </div>
-
-            <div className="mt-10 border-t border-white/20 pt-6">
-              <p className="text-sm leading-relaxed text-emerald-100">
-                Personal planning · Rwanda only · Your kind of journey
-              </p>
-            </div>
           </div>
 
-          {/* SLIDESHOW */}
-          <section
-            aria-label="Wildlife inspiration"
-            aria-roledescription="carousel"
-            className="min-w-0"
-            onMouseEnter={() => setIsPlaying(false)}
-            onFocusCapture={(event) => {
-              // Pause when focus enters from outside the slideshow.
-              // Moving between its controls should not override Play.
-              if (!event.currentTarget.contains(event.relatedTarget)) {
-                setIsPlaying(false);
-              }
-            }}
-          >
-            <div
-              aria-live={isPlaying ? "off" : "polite"}
-              aria-atomic="true"
+          {/* HERO BUTTONS */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+            <a
+              href="#packages"
+              className={`${button} bg-[#d3a33d] text-[#173d25] hover:bg-[#e4b754]`}
             >
-              <figure
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`${activePhoto + 1} of ${photos.length}`}
-                className="overflow-hidden rounded-3xl border border-white/15 bg-emerald-900"
+              Plan your Rwanda experience
+            </a>
+
+            <a
+              href={whatsapp(
+                "Hello Karisoke Concierge! I would like help planning a visit to Rwanda."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${button} border border-white/60 bg-black/10 text-white hover:bg-white/15`}
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
+
+          {/* SLIDESHOW ARROWS AND DOTS */}
+          <div className="mt-10 flex flex-wrap items-center gap-3 sm:gap-4">
+            <button
+              type="button"
+              onClick={() => selectSlide(activeSlide - 1)}
+              aria-label="Previous slide"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/50 bg-black/20 text-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <div className="relative aspect-[4/5] sm:aspect-square">
-                  <Image
-                    key={selectedPhoto.image}
-                    src={selectedPhoto.image}
-                    alt={selectedPhoto.alt}
-                    fill
-                    unoptimized
-                    loading="eager"
-                    sizes="(max-width: 1023px) 100vw, 50vw"
-                    className="object-cover"
-                  />
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
 
-                  <span
-                    aria-hidden="true"
-                    className="absolute right-4 top-4 rounded-full bg-black/65 px-4 py-2 text-sm text-white"
-                  >
-                    {activePhoto + 1} / {photos.length}
-                  </span>
-                </div>
-
-                <figcaption className="min-h-56 p-6 sm:p-8">
-                  <p className="text-sm font-semibold uppercase tracking-widest text-amber-300">
-                    {selectedPhoto.label}
-                  </p>
-
-                  <h2 className="mt-3 text-2xl font-semibold text-white">
-                    {selectedPhoto.title}
-                  </h2>
-
-                  <p className="mt-3 leading-relaxed text-emerald-100">
-                    {selectedPhoto.description}
-                  </p>
-                </figcaption>
-              </figure>
-            </div>
-
-            {/* Slideshow controls */}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={() => showSlide(activePhoto - 1)}
-                className={`${buttonStyle} border border-white/30 hover:bg-white/10`}
-              >
-                Previous
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsPlaying((current) => !current)}
-                className={`${buttonStyle} bg-amber-300 text-emerald-950 hover:bg-amber-200`}
-              >
-                {isPlaying ? "Pause slideshow" : "Play slideshow"}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => showSlide(activePhoto + 1)}
-                className={`${buttonStyle} border border-white/30 hover:bg-white/10`}
-              >
-                Next
-              </button>
-            </div>
-
-            {/* Photo thumbnails */}
             <div
               role="group"
               aria-label="Choose a slide"
-              className="mt-4 grid grid-cols-5 gap-3"
+              className="flex items-center"
             >
-              {photos.map((photo, index) => (
+              {slides.map((item, index) => (
                 <button
-                  key={photo.image}
+                  key={item.image}
                   type="button"
-                  aria-label={`Show ${photo.label}`}
-                  aria-pressed={activePhoto === index}
-                  onClick={() => showSlide(index)}
-                  className={`relative aspect-square overflow-hidden rounded-xl border-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 ${
-                    activePhoto === index
-                      ? "border-amber-300"
-                      : "border-transparent opacity-65 hover:opacity-100"
-                  }`}
+                  aria-label={`Show slide ${index + 1}`}
+                  aria-pressed={activeSlide === index}
+                  onClick={() => selectSlide(index)}
+                  className="flex h-11 w-8 items-center justify-center rounded focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
-                  <Image
-                    src={photo.image}
-                    alt=""
-                    fill
-                    unoptimized
-                    sizes="(max-width: 1023px) 18vw, 9vw"
-                    className="object-cover"
+                  <span
+                    className={`block h-2.5 rounded-full transition-all motion-reduce:transition-none ${
+                      activeSlide === index
+                        ? "w-6 bg-[#e4bc64]"
+                        : "w-2.5 bg-white/60"
+                    }`}
                   />
                 </button>
               ))}
             </div>
-          </section>
+
+            <button
+              type="button"
+              onClick={() => selectSlide(activeSlide + 1)}
+              aria-label="Next slide"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/50 bg-black/20 text-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* WILDLIFE GALLERY */}
-      <section
-        id="experiences"
-        aria-labelledby="experiences-title"
-        className="mx-auto max-w-7xl scroll-mt-28 px-6 py-20"
-      >
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-              Follow your curiosity
-            </p>
+      {/* INTRODUCTION */}
+      <section className="border-b border-[#173d25]/10 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 md:items-center">
+          <h2 className="font-serif text-3xl font-bold leading-tight">
+            You enjoy the journey.
+            <br />
+            We help arrange the details.
+          </h2>
 
-            <h2
-              id="experiences-title"
-              className="mt-3 text-3xl font-semibold sm:text-4xl"
-            >
-              What would you love to discover?
-            </h2>
-
-            <p className="mt-4 leading-relaxed text-slate-600">
-              Start with a little wildlife inspiration, then explore
-              the places that could shape your Rwanda journey.
-            </p>
-          </div>
-
-          <Link
-            href="/destinations"
-            className="rounded-lg py-3 font-semibold underline underline-offset-4 hover:text-emerald-700"
-          >
-            Explore Rwanda
-          </Link>
-        </div>
-
-        {/* Gallery filters */}
-        <div
-          role="group"
-          aria-label="Filter wildlife photographs"
-          className="my-8 flex flex-wrap gap-3"
-        >
-          {filters.map((item) => (
-            <button
-              key={item}
-              type="button"
-              aria-pressed={filter === item}
-              onClick={() => setFilter(item)}
-              className={`rounded-full border px-5 py-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
-                filter === item
-                  ? "border-emerald-950 bg-emerald-950 text-white"
-                  : "border-slate-300 bg-white text-emerald-950 hover:bg-emerald-50"
-              }`}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-
-        <p aria-live="polite" className="sr-only">
-          Showing {visiblePhotos.length} photographs
-        </p>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visiblePhotos.map((photo) => (
-            <article
-              key={photo.image}
-              className="overflow-hidden rounded-2xl border border-slate-200"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <Image
-                  src={photo.image}
-                  alt={photo.alt}
-                  fill
-                  unoptimized
-                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                  className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:hover:scale-105"
-                />
-              </div>
-
-              <div className="p-6">
-                <p className="text-sm text-emerald-700">
-                  {photo.category}
-                </p>
-
-                <h3 className="mt-2 text-xl font-semibold">
-                  {photo.label}
-                </h3>
-
-                <p className="mt-3 leading-relaxed text-slate-600">
-                  {photo.description}
-                </p>
-              </div>
-            </article>
-          ))}
+          <p className="max-w-xl leading-relaxed text-stone-600">
+            Karisoke Concierge brings your Rwanda plans together through
+            one local contact. From choosing a stay to organizing
+            transport and activities, we help you make the most of your
+            time here.
+          </p>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section
-        aria-labelledby="services-title"
-        className="bg-emerald-50 px-6 py-20"
-      >
+      <section className="bg-[#f0eee7] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-            Leave the details with us
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="min-w-0 max-w-2xl">
+              <p className={eyebrow}>Our services</p>
 
-          <h2
-            id="services-title"
-            className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl"
-          >
-            More exploring. Less organizing.
-          </h2>
+              <h2 className={sectionHeading}>
+                Every detail, thoughtfully arranged.
+              </h2>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <p className="mt-5 leading-relaxed text-stone-600">
+                From landing in Kigali to your final day, we help
+                coordinate the details so you can focus on the experience.
+              </p>
+            </div>
+
+            <Link
+              href="/services"
+              className={`${button} border border-[#173d25]/20 bg-white hover:bg-stone-100`}
+            >
+              View all services
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {services.map((service) => (
               <article
                 key={service.number}
-                className="flex flex-col rounded-2xl bg-white p-8"
+                className="flex min-w-0 flex-col rounded-lg border border-[#173d25]/10 bg-white p-5 sm:p-6 lg:p-7"
               >
-                <span className="text-sm font-semibold text-emerald-700">
+                <span className="font-serif text-3xl text-[#907025]">
                   {service.number}
                 </span>
 
-                <h3 className="mt-5 text-xl font-semibold">
+                <h3 className="mt-5 font-serif text-2xl font-bold leading-tight">
                   {service.title}
                 </h3>
 
-                <p className="mt-4 flex-1 leading-relaxed text-slate-600">
+                <p className="mt-4 flex-1 leading-relaxed text-stone-600">
                   {service.description}
                 </p>
 
-                <Link
-                  href="/services"
-                  className="mt-6 inline-block self-start rounded font-semibold underline underline-offset-4 hover:text-emerald-700"
+                <a
+                  href={whatsapp(
+                    `Hello Karisoke Concierge! I would like to enquire about ${service.title.toLowerCase()}.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${button} mt-7 w-full bg-[#173d25] text-white hover:bg-[#245d38] sm:w-auto sm:self-start`}
                 >
-                  Explore services
-                  <span className="sr-only">
-                    : {service.title}
-                  </span>
-                </Link>
+                  Enquire about this service
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DESTINATIONS */}
+      <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl">
+          <p className={eyebrow}>Across Rwanda</p>
+
+          <h2 className={sectionHeading}>
+            Places worth travelling for.
+          </h2>
+
+          <p className="mt-5 max-w-2xl leading-relaxed text-stone-600">
+            Shape your journey around cities, mountains, forests, and
+            quieter days by the water.
+          </p>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {destinations.map((destination) => (
+              <article
+                key={destination.name}
+                className="flex min-w-0 flex-col rounded-lg border border-[#173d25]/15 bg-white p-5 sm:p-6 lg:p-7"
+              >
+                <p className={eyebrow}>{destination.theme}</p>
+
+                <h3 className="mt-4 font-serif text-3xl font-bold leading-tight">
+                  {destination.name}
+                </h3>
+
+                <p className="mt-4 flex-1 leading-relaxed text-stone-600">
+                  {destination.description}
+                </p>
+
+                <a
+                  href={whatsapp(
+                    `Hello! I would like to include ${destination.name} in my Rwanda itinerary.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex min-h-11 items-center self-start rounded py-2 font-semibold underline underline-offset-4"
+                >
+                  Plan a visit
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <Link
+            href="/destinations"
+            className={`${button} mt-8 border border-[#173d25]/25 hover:bg-[#173d25]/5`}
+          >
+            Explore destinations
+          </Link>
+        </div>
+      </section>
+
+      {/* SAMPLE PACKAGES */}
+      <section
+        id="packages"
+        className="scroll-mt-28 bg-[#173d25] px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      >
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-[#e4bc64]">
+            Sample itineraries
+          </p>
+
+          <h2 className={`${sectionHeading} max-w-3xl`}>
+            A starting point, shaped around you.
+          </h2>
+
+          <p className="mt-5 max-w-2xl leading-relaxed text-white/80">
+            These are trip ideas, not fixed offers. Contact us to discuss
+            a personalized itinerary, current availability, and a quote.
+          </p>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {packages.map((item) => (
+              <article
+                key={item.title}
+                className="flex min-w-0 flex-col rounded-lg bg-[#faf9f5] p-5 text-[#173d25] sm:p-6 lg:p-8"
+              >
+                <p className={eyebrow}>{item.duration}</p>
+
+                <h3 className="mt-4 font-serif text-3xl font-bold leading-tight">
+                  {item.title}
+                </h3>
+
+                <p className="mt-4 leading-relaxed text-stone-600">
+                  {item.description}
+                </p>
+
+                <ul className="my-7 flex-1 list-disc space-y-3 pl-5 text-sm leading-relaxed text-stone-600">
+                  {item.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+
+                <a
+                  href={whatsapp(
+                    `Hello! I am interested in the "${item.title}" trip idea. Can we personalize it?`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${button} bg-[#d3a33d] hover:bg-[#e4b754]`}
+                >
+                  Personalize this trip
+                </a>
               </article>
             ))}
           </div>
@@ -444,118 +542,53 @@ export default function Home() {
 
       {/* HOW IT WORKS */}
       <section
-        aria-labelledby="planning-title"
-        className="mx-auto max-w-7xl px-6 py-20"
+        id="how-it-works"
+        className="scroll-mt-28 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
       >
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-            Simple, personal planning
-          </p>
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
+            <Image
+              src="/images/giraffes.jpeg"
+              alt="Giraffes and zebras among trees and green grass"
+              fill
+              unoptimized
+              sizes="(max-width: 1023px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
 
-          <h2
-            id="planning-title"
-            className="mt-3 text-3xl font-semibold sm:text-4xl"
-          >
-            From your first idea to a thoughtful itinerary.
-          </h2>
-        </div>
+          <div className="min-w-0">
+            <p className={eyebrow}>How it works</p>
 
-        <ol className="mt-10 grid gap-8 md:grid-cols-3">
-          {[
-            {
-              title: "Tell us what you love",
-              description:
-                "Share your interests, travel dates, group size, and preferred pace.",
-            },
-            {
-              title: "Explore the possibilities",
-              description:
-                "Consider accommodation, transport, and experiences that suit your plans.",
-            },
-            {
-              title: "Agree on the details",
-              description:
-                "Discuss availability, costs, and arrangements before confirming your bookings.",
-            },
-          ].map((step, index) => (
-            <li
-              key={step.title}
-              className="border-t-2 border-emerald-200 pt-6"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-950 text-sm font-semibold text-amber-300">
-                {index + 1}
-              </span>
+            <h2 className={sectionHeading}>
+              Your plans, made personal.
+            </h2>
 
-              <h3 className="mt-5 text-xl font-semibold">
-                {step.title}
-              </h3>
+            <ol className="mt-8">
+              {steps.map((step, index) => (
+                <li
+                  key={step.title}
+                  className="flex gap-4 border-b border-[#173d25]/15 py-6 sm:gap-5 sm:py-7"
+                >
+                  <span className="shrink-0 pt-1 font-serif text-xl font-bold text-[#907025]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
 
-              <p className="mt-3 leading-relaxed text-slate-600">
-                {step.description}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </section>
+                  <div className="min-w-0">
+                    <h3 className="font-serif text-2xl font-bold leading-tight">
+                      {step.title}
+                    </h3>
 
-      {/* FINAL INVITATION */}
-      <section className="bg-emerald-950 px-6 py-20 text-center text-white">
-        <div className="mx-auto max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-widest text-amber-300">
-            Your journey starts with an idea
-          </p>
-
-          <h2 className="mt-5 text-3xl font-semibold sm:text-5xl">
-            Make Rwanda your next story.
-          </h2>
-
-          <p className="mt-6 text-lg leading-relaxed text-emerald-100">
-            A nature escape, a relaxed stay, or a little of everything.
-            Discover how Karisoke Concierge can help you bring it
-            together.
-          </p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/about"
-              className={`${buttonStyle} bg-amber-300 text-emerald-950 hover:bg-amber-200`}
-            >
-              How we plan your journey
-            </Link>
-
-            <Link
-              href="/destinations"
-              className={`${buttonStyle} border border-white/40 hover:bg-white/10`}
-            >
-              Discover destinations
-            </Link>
+                    <p className="mt-3 leading-relaxed text-stone-600">
+                      {step.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-white/15 bg-emerald-950 px-6 py-8 text-emerald-100">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
-          <p className="text-sm">
-            Karisoke Concierge · Your personal connection to Rwanda
-          </p>
-
-          <nav
-            aria-label="Footer navigation"
-            className="flex flex-wrap justify-center gap-5 text-sm"
-          >
-            <Link href="/services" className="hover:text-amber-300">
-              Services
-            </Link>
-            <Link href="/destinations" className="hover:text-amber-300">
-              Explore Rwanda
-            </Link>
-            <Link href="/about" className="hover:text-amber-300">
-              About us
-            </Link>
-          </nav>
-        </div>
-      </footer>
     </main>
   );
 }

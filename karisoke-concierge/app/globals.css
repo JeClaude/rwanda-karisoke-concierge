@@ -24,3 +24,31 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Allow long headings and links to fit narrow screens. */
+h1,
+h2,
+h3,
+p,
+a {
+  overflow-wrap: anywhere;
+}
+
+/* Make keyboard navigation clearly visible. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #b88624;
+  outline-offset: 4px;
+}
+
+/* Keep anchored sections below the sticky navigation. */
+section[id] {
+  scroll-margin-top: 8rem;
+}
+
+/* Comfortable navigation between homepage sections. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
