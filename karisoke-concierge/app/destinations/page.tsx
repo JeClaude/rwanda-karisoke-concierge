@@ -1,7 +1,12 @@
 import ContentPage from "../components/ContentPage";
 
-export const metadata = {
-  title: "Explore Rwanda | Karisoke Concierge",
+export const Metadata = {
+  title: "Rwanda Destinations | Karisoke Concierge",
+  description:
+    "Explore Kigali, Volcanoes National Park, Akagera, Lake Kivu, and Nyungwe. Plan your Rwanda journey with Karisoke Concierge.",
+  alternates: {
+    canonical: "/destinations",
+  },
 };
 
 export default function DestinationsPage() {
