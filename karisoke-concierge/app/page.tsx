@@ -261,7 +261,7 @@ export default function Home() {
           {/* HERO BUTTONS */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
             <a
-              href="#packages"
+              href="/packages"
               className={`${button} bg-[#d3a33d] text-[#173d25] hover:bg-[#e4b754]`}
             >
               Plan your Rwanda experience
@@ -480,63 +480,6 @@ export default function Home() {
           >
             Explore destinations
           </Link>
-        </div>
-      </section>
-
-      {/* SAMPLE PACKAGES */}
-      <section
-        id="packages"
-        className="scroll-mt-28 bg-[#173d25] px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8 lg:py-20"
-      >
-        <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-[#e4bc64]">
-            Sample itineraries
-          </p>
-
-          <h2 className={`${sectionHeading} max-w-3xl`}>
-            A starting point, shaped around you.
-          </h2>
-
-          <p className="mt-5 max-w-2xl leading-relaxed text-white/80">
-            These are trip ideas, not fixed offers. Contact us to discuss
-            a personalized itinerary, current availability, and a quote.
-          </p>
-
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {packages.map((item) => (
-              <article
-                key={item.title}
-                className="flex min-w-0 flex-col rounded-lg bg-[#faf9f5] p-5 text-[#173d25] sm:p-6 lg:p-8"
-              >
-                <p className={eyebrow}>{item.duration}</p>
-
-                <h3 className="mt-4 font-serif text-3xl font-bold leading-tight">
-                  {item.title}
-                </h3>
-
-                <p className="mt-4 leading-relaxed text-stone-600">
-                  {item.description}
-                </p>
-
-                <ul className="my-7 flex-1 list-disc space-y-3 pl-5 text-sm leading-relaxed text-stone-600">
-                  {item.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
-
-                <a
-                  href={whatsapp(
-                    `Hello! I am interested in the "${item.title}" trip idea. Can we personalize it?`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${button} bg-[#d3a33d] hover:bg-[#e4b754]`}
-                >
-                  Personalize this trip
-                </a>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
