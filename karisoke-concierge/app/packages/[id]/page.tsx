@@ -158,9 +158,33 @@ export default function TourDetailsPage() {
       <section className="bg-[#12372a] py-14 text-white sm:py-20">
         <div className={`${container} grid gap-8 md:grid-cols-[1fr_auto] md:items-center`}>
           <div><p className={`${eyebrow} text-[#e4bc64]`}>Start your journey</p><h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">Let’s make this journey yours.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-white/70">Tell us when you want to travel and what matters most. We will help you confirm the details.</p></div>
-          <a href={whatsapp(journey.title)} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-12 items-center justify-center bg-[#e4bc64] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#173d25] transition hover:bg-white ${focus}`}>Enquire now ↗</a>
+          <Link href={`/enquire?tour=${journey.id}`} className={`inline-flex min-h-12 items-center justify-center bg-[#e4bc64] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#173d25] transition hover:bg-white ${focus}`}>Enquire now ↗</Link>
         </div>
       </section>
+
+      {/* Persistent tour enquiry bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#211f1f] text-white shadow-[0_-8px_30px_rgba(0,0,0,0.18)]">
+        <div className={`${container} flex min-h-[78px] items-center justify-between gap-4 py-3`}>
+          <div className="flex min-w-0 flex-wrap items-center gap-x-8 gap-y-2 sm:gap-x-10">
+            <div>
+              <p className="font-serif text-lg sm:text-xl">{journey.nights}</p>
+              <p className="text-[10px] uppercase tracking-wider text-white/70">Nights</p>
+            </div>
+            <div>
+              <p className="font-serif text-lg sm:text-xl">{journey.route.split("·").map((part) => part.trim()).filter(Boolean).length}</p>
+              <p className="text-[10px] uppercase tracking-wider text-white/70">Stops</p>
+            </div>
+            <div className="hidden min-w-0 sm:block">
+              <p className="font-serif text-lg sm:text-xl">USD {journey.price}</p>
+              <p className="text-[10px] text-white/70">Indicative price, per person</p>
+            </div>
+          </div>
+          <Link href={`/enquire?tour=${journey.id}`} className={`inline-flex min-h-12 shrink-0 items-center justify-center bg-[#ff6900] px-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#171717] transition hover:bg-[#ff8b38] sm:px-8 ${focus}`}>
+            Enquire <span aria-hidden="true" className="ml-2">↗</span>
+          </Link>
+        </div>
+      </div>
+      <div aria-hidden="true" className="h-24 sm:h-28" />
     </main>
   );
 }
