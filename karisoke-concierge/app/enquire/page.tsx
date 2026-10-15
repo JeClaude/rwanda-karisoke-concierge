@@ -22,9 +22,11 @@ export default function EnquirePage() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
   const [step, setStep] = useState<1 | 2>(1);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [subscribe, setSubscribe] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -63,12 +65,14 @@ export default function EnquirePage() {
       `Interests: ${selectedInterests.join(", ") || "Not specified"}`,
       `Additional notes: ${notes || "None"}`,
       "",
-      `Name: ${name}`,
+      `Name: ${firstName} ${lastName}`.trim(),
       `Email: ${email}`,
-      `Phone / WhatsApp: ${phone || "Not provided"}`,
+      `Phone / WhatsApp: ${phone ? `+250 ${phone}` : "Not provided"}`,
+      `Subscribe to travel updates: ${subscribe ? "Yes" : "No"}`,
     ].join("\n");
     window.location.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
   }
+
 
   return (
     <main className="min-h-screen bg-[#f1eee6] text-[#173d25]">
@@ -123,7 +127,7 @@ export default function EnquirePage() {
           <div className="flex items-start justify-between gap-4 border-b border-[#173d25]/15 pb-5">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#856326]">Trip enquiry</p>
-              <h2 className="mt-2 font-serif text-3xl">{step === 1 ? "Tell us about your trip" : "How can we reach you?"}</h2>
+              <h2 className="mt-2 font-serif text-3xl">{step === 1 ? "Tell us about your trip" : "Complete your enquiry"}</h2>
             </div>
             <p className="shrink-0 text-xs font-semibold uppercase tracking-widest text-[#856326]">0{step} / 02</p>
           </div>
@@ -190,18 +194,33 @@ export default function EnquirePage() {
                   <p className="mt-1 text-right text-[10px] text-[#61675e]">{notes.length} / 2000</p>
                 </fieldset>
 
-                <button type="button" onClick={() => setStep(2)} className={`inline-flex min-h-12 items-center justify-center gap-5 bg-[#ff6900] px-6 text-xs font-bold uppercase tracking-widest text-[#171717] transition hover:bg-[#ff8b38] ${focus}`}>Next <span aria-hidden="true">›</span></button>
+                <button type="button" onClick={() => { setStep(2); window.scrollTo({ top: 0, behavior: "smooth" }); }} className={`inline-flex min-h-12 items-center justify-center gap-5 bg-[#ff6900] px-6 text-xs font-bold uppercase tracking-widest text-[#171717] transition hover:bg-[#ff8b38] ${focus}`}>Next <span aria-hidden="true">›</span></button>
               </div>
             ) : (
               <div className="space-y-5 pt-7">
-                <p className="text-sm leading-7 text-[#61675e]">Add your contact details and we’ll open WhatsApp with your trip preferences ready to send to Karisoke Concierge.</p>
-                <label className="block text-xs font-semibold">Full name<input required value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" placeholder="Your full name" className="mt-2 min-h-12 w-full border border-[#173d25]/25 bg-white px-3 text-sm font-normal" /></label>
-                <label className="block text-xs font-semibold">Email address<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" placeholder="you@example.com" className="mt-2 min-h-12 w-full border border-[#173d25]/25 bg-white px-3 text-sm font-normal" /></label>
-                <label className="block text-xs font-semibold">Phone / WhatsApp <span className="font-normal text-[#61675e]">Optional</span><input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} autoComplete="tel" placeholder="+250..." className="mt-2 min-h-12 w-full border border-[#173d25]/25 bg-white px-3 text-sm font-normal" /></label>
-                <div className="flex flex-wrap gap-3 pt-3">
-                  <button type="button" onClick={() => setStep(1)} className={`inline-flex min-h-12 items-center justify-center border border-[#173d25]/30 px-5 text-xs font-bold uppercase tracking-widest transition hover:bg-white ${focus}`}>Back</button>
-                  <button type="submit" className={`inline-flex min-h-12 flex-1 items-center justify-center gap-3 bg-[#ff6900] px-6 text-xs font-bold uppercase tracking-widest text-[#171717] transition hover:bg-[#ff8b38] sm:flex-none ${focus}`}>Send enquiry on WhatsApp ↗</button>
+                <p className="text-sm leading-7 text-[#61675e]">An expert Travel Designer will be in touch. Add your contact details to complete your enquiry.</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <label className="sr-only" htmlFor="first-name">First name</label>
+                  <input id="first-name" required autoComplete="given-name" value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder="First name" className="min-h-11 w-full border border-[#b8b0a5] bg-[#e0d9cf] px-3 text-xs outline-none transition placeholder:text-[#777168] focus:border-[#ff6900] focus:bg-white" />
+                  <label className="sr-only" htmlFor="last-name">Last name</label>
+                  <input id="last-name" required autoComplete="family-name" value={lastName} onChange={(event) => setLastName(event.target.value)} placeholder="Last name" className="min-h-11 w-full border border-[#b8b0a5] bg-[#e0d9cf] px-3 text-xs outline-none transition placeholder:text-[#777168] focus:border-[#ff6900] focus:bg-white" />
                 </div>
+                <label className="sr-only" htmlFor="enquiry-email">Email</label>
+                <input id="enquiry-email" required type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email" className="min-h-11 w-full border border-[#b8b0a5] bg-[#e0d9cf] px-3 text-xs outline-none transition placeholder:text-[#777168] focus:border-[#ff6900] focus:bg-white" />
+                <label className="sr-only" htmlFor="enquiry-phone">Phone number</label>
+                <div className="flex min-h-11 items-center border border-[#b8b0a5] bg-[#e0d9cf] focus-within:border-[#ff6900]">
+                  <span className="flex h-full shrink-0 items-center gap-2 border-r border-[#b8b0a5] px-3 text-xs" aria-label="Rwanda country code"><span aria-hidden="true">🇷🇼</span><span>+250</span></span>
+                  <input id="enquiry-phone" type="tel" autoComplete="tel-national" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Phone number" className="min-h-10 min-w-0 flex-1 bg-transparent px-3 text-xs outline-none placeholder:text-[#777168]" />
+                </div>
+                <label className="flex cursor-pointer items-start gap-2 text-[11px] leading-5 text-[#4e4a44]">
+                  <input type="checkbox" checked={subscribe} onChange={(event) => setSubscribe(event.target.checked)} className="mt-0.5 h-3.5 w-3.5 accent-[#ff6900]" />
+                  <span>Subscribe for travel inspiration, updates, and exclusive offers.</span>
+                </label>
+                <div className="flex flex-wrap items-center gap-4 pt-1">
+                  <button type="button" onClick={() => { setStep(1); window.scrollTo({ top: 0, behavior: "smooth" }); }} className={`text-[11px] text-[#4e4a44] underline underline-offset-4 hover:text-black ${focus}`}>Back</button>
+                  <button type="submit" className={`inline-flex min-h-11 items-center justify-center gap-4 bg-[#ff6900] px-5 text-[10px] font-bold uppercase tracking-[0.15em] text-[#171615] transition hover:bg-[#ff8730] ${focus}`}>Submit enquiry <span aria-hidden="true">›</span></button>
+                </div>
+                <p className="text-[10px] leading-5 text-[#615b53]">By submitting this form you agree with our <Link href="/privacy-policy" className="underline underline-offset-2 hover:text-black">Privacy Policy</Link>.</p>
               </div>
             )}
           </form>

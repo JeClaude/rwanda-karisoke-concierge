@@ -54,53 +54,6 @@ export default function Footer() {
 
   return (
     <footer className="text-white">
-      {/* CONTACT BANNER */}
-      <section
-        id="contact"
-        aria-labelledby="footer-contact-title"
-        className="scroll-mt-28 bg-[#d3a33d] px-4 py-12 text-[#173d25] sm:px-6 lg:px-8"
-      >
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em]">
-              Let’s plan something memorable
-            </p>
-
-            <h2
-              id="footer-contact-title"
-              className="mt-4 font-serif text-3xl font-bold leading-tight sm:text-4xl"
-            >
-              Your Rwanda journey starts with a conversation.
-            </h2>
-
-            <p className="mt-4 max-w-xl leading-relaxed">
-              Tell us your travel dates, interests, and group size.
-              We’ll help you explore the possibilities.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
-            <a
-              href={whatsapp(
-                "Hello Karisoke Concierge! I would like help planning my Rwanda trip.\n\nTravel dates:\nNumber of travelers:\nPlaces or activities I am interested in:\nServices needed:"
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${buttonStyle} bg-[#173d25] text-white hover:bg-[#245d38]`}
-            >
-              Plan my trip on WhatsApp
-            </a>
-
-            <a
-              href={`tel:+${phone}`}
-              className={`${buttonStyle} border border-[#173d25]/35 hover:bg-white/20`}
-            >
-              Call us
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* MAIN FOOTER */}
       <div className="bg-[#173d25] px-4 pt-12 sm:px-6 lg:px-8 lg:pt-16">
         <div className="mx-auto max-w-7xl">
