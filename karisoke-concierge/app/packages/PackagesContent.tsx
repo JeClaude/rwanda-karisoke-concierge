@@ -14,7 +14,7 @@ export default function PackagesContent() {
   const availableCategories = useMemo(
     () => [
       "All journeys",
-      ...categories.filter((category) => category !== "All journeys"),
+      ...categories.filter((category) => category !== "All packages"),
     ],
     [],
   );

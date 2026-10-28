@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,14 +7,20 @@ import { useParams } from "next/navigation";
 import { journeys } from "../journeys";
 
 const PHONE = "250789162022";
-const container = "mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14";
-const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d3a33d]";
-const eyebrow = "text-[10px] font-semibold uppercase tracking-[0.22em]";
+
+const container =
+  "mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14";
+
+const eyebrow =
+  "text-[10px] font-semibold uppercase tracking-[0.22em]";
+
+const focus =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d3a33d]";
 
 function whatsapp(title: string) {
   const message = [
     "Hello Karisoke Concierge!",
-    `I’m interested in ${title}.`,
+    `I'm interested in ${title}.`,
     "",
     "My travel dates:",
     "Number of travellers:",
@@ -21,7 +28,36 @@ function whatsapp(title: string) {
     "",
     "Please help me personalise the itinerary and get a quote.",
   ].join("\n");
+
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+function ArrowIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className={`${eyebrow} flex items-center gap-3 text-[#a8752b]`}>
+      {children}
+      <span className="h-px w-10 bg-[#bd914f]" />
+    </p>
+  );
 }
 
 export default function TourDetailsPage() {
@@ -30,161 +66,445 @@ export default function TourDetailsPage() {
 
   if (!journey) {
     return (
-      <main className="min-h-screen bg-[#f1eee6] px-5 py-24 text-[#173d25]">
+      <main className="min-h-screen bg-[#f7f5ee] px-5 py-24 text-[#153b30]">
         <div className="mx-auto max-w-3xl">
-          <p className={eyebrow}>Karisoke Concierge</p>
-          <h1 className="mt-4 font-serif text-4xl">Tour not found</h1>
-          <p className="mt-4 text-[#61675e]">This tour may have moved or is no longer available.</p>
-          <Link href="/packages" className={`mt-8 inline-flex min-h-12 items-center bg-[#173d25] px-5 text-white ${focus}`}>Back to packages</Link>
+          <SectionLabel>Karisoke Concierge</SectionLabel>
+          <h1 className="mt-5 font-serif text-4xl sm:text-5xl">
+            Journey not found.
+          </h1>
+          <p className="mt-5 leading-7 text-[#647067]">
+            This journey may have moved or is no longer available.
+          </p>
+          <Link
+            href="/packages"
+            className={`mt-8 inline-flex min-h-12 items-center gap-3 bg-[#153b30] px-6 text-sm font-semibold text-white transition hover:bg-[#245443] ${focus}`}
+          >
+            <span aria-hidden="true">←</span>
+            Explore all packages
+          </Link>
         </div>
       </main>
     );
   }
 
-  const gallery = journey.gallery?.length ? journey.gallery : [journey.image];
+  const gallery = journey.gallery?.length
+    ? journey.gallery
+    : [journey.image];
+
+  const routeStops = journey.route
+    .split("·")
+    .map((part) => part.trim())
+    .filter(Boolean);
 
   return (
-    <main className="min-w-0 bg-[#f1eee6] text-[#173d25]">
-      {/* Breadcrumb and photographic gallery */}
-      <section className="pt-6 sm:pt-8">
+    <main className="min-w-0 overflow-hidden bg-[#f7f5ee] pb-24 text-[#153b30] sm:pb-28">
+      {/* BREADCRUMB */}
+      <section className="pt-5 sm:pt-8">
         <div className={container}>
-          <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-xs text-[#61675e]">
-            <Link href="/" className={`hover:text-[#173d25] ${focus}`}>Home</Link><span>/</span>
-            <Link href="/packages" className={`hover:text-[#173d25] ${focus}`}>Rwanda packages</Link><span>/</span>
-            <span aria-current="page" className="text-[#173d25]">{journey.title}</span>
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-5 flex flex-wrap items-center gap-2 text-xs text-[#647067]"
+          >
+            <Link href="/" className={`transition hover:text-[#a8752b] ${focus}`}>
+              Home
+            </Link>
+            <span>/</span>
+            <Link
+              href="/packages"
+              className={`transition hover:text-[#a8752b] ${focus}`}
+            >
+              Packages
+            </Link>
+            <span>/</span>
+            <span aria-current="page" className="text-[#153b30]">
+              {journey.title}
+            </span>
           </nav>
-          <div className="grid h-[340px] grid-cols-2 gap-2 overflow-hidden sm:h-[470px] lg:grid-cols-4 lg:grid-rows-2">
-            <div className="relative col-span-2 row-span-2 min-h-0 overflow-hidden bg-[#173d25]">
-              <Image src={gallery[0]} alt={journey.alt} fill priority unoptimized sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover transition duration-700 hover:scale-[1.02]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
-              <span className="absolute bottom-4 left-4 bg-[#e4bc64] px-3 py-2 text-[9px] font-bold uppercase tracking-widest text-[#173d25]">{journey.category}</span>
+
+          {/* PHOTO GALLERY */}
+          <div className="grid h-[300px] grid-cols-2 gap-2 overflow-hidden sm:h-[430px] lg:h-[540px] lg:grid-cols-4 lg:grid-rows-2">
+            <div className="relative col-span-2 row-span-2 min-h-0 overflow-hidden bg-[#dce2d6]">
+              <Image
+                src={gallery[0]}
+                alt={journey.alt}
+                fill
+                priority
+                unoptimized
+                sizes="(max-width: 1023px) 100vw, 50vw"
+                className="object-cover transition duration-700 hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+              <span className="absolute bottom-5 left-5 bg-[#e9b85f] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#153b30] sm:bottom-7 sm:left-7">
+                {journey.category}
+              </span>
             </div>
+
             {gallery.slice(1, 5).map((src, index) => (
-              <div key={src} className={`relative min-h-0 overflow-hidden bg-[#173d25] ${index === 3 ? "hidden lg:block" : ""}`}>
-                <Image src={src} alt={`${journey.title} photography ${index + 2}`} fill unoptimized sizes="(max-width: 1023px) 50vw, 25vw" className="object-cover transition duration-700 hover:scale-105" />
+              <div
+                key={`${src}-${index}`}
+                className={`relative min-h-0 overflow-hidden bg-[#dce2d6] ${
+                  index === 3 ? "hidden lg:block" : ""
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={`${journey.title}, view ${index + 2}`}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1023px) 50vw, 25vw"
+                  className="object-cover transition duration-700 hover:scale-105"
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Tour title and summary */}
-      <section className="py-10 sm:py-14">
-        <div className={`${container} grid gap-8 lg:grid-cols-[1fr_350px] lg:gap-14`}>
+      {/* TITLE AND BOOKING SUMMARY */}
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div
+          className={`${container} grid gap-10 lg:grid-cols-[1fr_350px] lg:gap-16`}
+        >
           <div>
-            <p className={`${eyebrow} text-[#856326]`}>Karisoke Concierge · Rwanda</p>
-            <h1 className="mt-4 max-w-4xl font-serif text-4xl leading-tight sm:text-6xl">{journey.title}</h1>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-[#61675e] sm:text-lg">{journey.description}</p>
-            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 border-y border-[#173d25]/15 py-5 text-sm">
-              <span><strong>{journey.days}</strong> days</span><span><strong>{journey.nights}</strong> nights</span><span>{journey.route}</span>
+            <SectionLabel>Discover Rwanda · Karisoke Concierge</SectionLabel>
+
+            <h1 className="mt-5 max-w-4xl font-serif text-4xl leading-[1.08] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+              {journey.title}
+            </h1>
+
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#647067] sm:text-base sm:leading-8">
+              {journey.description}
+            </p>
+
+            <div className="mt-8 grid grid-cols-2 gap-4 border-y border-[#153b30]/15 py-5 sm:grid-cols-3">
+              <div>
+                <p className="font-serif text-2xl sm:text-3xl">
+                  {journey.days}
+                </p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-[#647067]">
+                  Days
+                </p>
+              </div>
+
+              <div>
+                <p className="font-serif text-2xl sm:text-3xl">
+                  {journey.nights}
+                </p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-[#647067]">
+                  Nights
+                </p>
+              </div>
+
+              <div className="col-span-2 sm:col-span-1">
+                <p className="font-serif text-xl sm:text-2xl">
+                  {routeStops.length} destinations
+                </p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-[#647067]">
+                  Suggested route
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-7">
+              <p className={`${eyebrow} text-[#a8752b]`}>
+                Your route through Rwanda
+              </p>
+              <p className="mt-3 text-sm leading-7 text-[#647067]">
+                {journey.route}
+              </p>
             </div>
           </div>
-          <aside className="self-start border-t-4 border-[#d3a33d] bg-white p-6 shadow-sm sm:p-7">
-            <p className={eyebrow}>Suggested journey</p>
-            <p className="mt-4 text-xs text-[#61675e]">Indicative price per person</p>
-            <p className="mt-1 font-serif text-3xl">USD {journey.price}</p>
-            <p className="mt-3 text-xs leading-6 text-[#61675e]">Final pricing depends on travel dates, group size, availability, accommodation and confirmed activities.</p>
-            <a href={whatsapp(journey.title)} target="_blank" rel="noopener noreferrer" className={`mt-5 flex min-h-12 items-center justify-center bg-[#d3a33d] px-5 py-4 text-xs font-bold uppercase tracking-widest text-[#173d25] transition hover:bg-[#e4bc64] ${focus}`}>Enquire about this tour ↗</a>
-            <Link href="/packages" className={`mt-4 flex min-h-10 items-center justify-center text-xs font-semibold uppercase tracking-widest text-[#173d25] underline underline-offset-4 ${focus}`}>Explore all journeys</Link>
+
+          <aside className="h-fit border border-[#e4e0d6] bg-white shadow-sm">
+            <div className="h-1 bg-[#d3a33d]" />
+            <div className="p-6 sm:p-8">
+              <SectionLabel>Your journey</SectionLabel>
+
+              <h2 className="mt-4 font-serif text-2xl sm:text-3xl">
+                Make it yours.
+              </h2>
+
+              <p className="mt-3 text-sm leading-7 text-[#647067]">
+                Tell us your travel dates and preferences. We&apos;ll help
+                you personalise the itinerary and confirm the details.
+              </p>
+
+              <div className="mt-6 border-y border-[#153b30]/10 py-5">
+                <p className="text-xs text-[#647067]">
+                  Indicative price per person
+                </p>
+                <p className="mt-1 font-serif text-3xl">
+                  USD {journey.price}
+                </p>
+                <p className="mt-3 text-xs leading-6 text-[#647067]">
+                  Final pricing depends on dates, group size, accommodation,
+                  availability, and confirmed activities.
+                </p>
+              </div>
+
+              <a
+                href={whatsapp(journey.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`mt-6 flex min-h-12 items-center justify-center gap-3 bg-[#e9b85f] px-5 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[#153b30] transition hover:bg-[#f2cc83] ${focus}`}
+              >
+                Enquire about this journey
+                <ArrowIcon className="h-4 w-4" />
+              </a>
+
+              <Link
+                href="/packages"
+                className={`mt-4 flex min-h-10 items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#153b30] transition hover:text-[#a8752b] ${focus}`}
+              >
+                Browse all packages
+                <ArrowIcon className="h-4 w-4" />
+              </Link>
+            </div>
           </aside>
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="bg-[#191f1b] py-14 text-white sm:py-20">
-        <div className={`${container} grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start`}>
-          <div><p className={`${eyebrow} text-[#e4bc64]`}>Why this journey</p><h2 className="mt-4 max-w-md font-serif text-4xl leading-tight sm:text-5xl">Small moments.<br />Lasting memories.</h2><p className="mt-5 max-w-md text-sm leading-7 text-white/65">A considered route through Rwanda’s landscapes, wildlife and local experiences.</p></div>
-          <ul className="grid gap-0 sm:grid-cols-2">
+      {/* HIGHLIGHTS */}
+      <section className="bg-[#153b30] py-16 text-[#fffdf7] sm:py-20 lg:py-24">
+        <div
+          className={`${container} grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20`}
+        >
+          <div>
+            <SectionLabel>Journey highlights</SectionLabel>
+            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-[-0.035em] sm:text-5xl">
+              The moments
+              <br />
+              you&apos;ll remember.
+            </h2>
+            <p className="mt-5 max-w-md text-sm leading-7 text-white/70">
+              Discover the landscapes, wildlife, and local experiences that
+              make this Rwanda journey special.
+            </p>
+          </div>
+
+          <ul className="grid gap-x-8 sm:grid-cols-2">
             {journey.highlights.map((highlight, index) => (
-              <li key={highlight} className="flex gap-4 border-t border-white/20 py-5 sm:px-4">
-                <span className="font-serif text-2xl text-[#e4bc64]">0{index + 1}</span><span className="text-sm leading-7 text-white/85">{highlight}</span>
+              <li
+                key={highlight}
+                className="flex gap-4 border-t border-white/20 py-5"
+              >
+                <span className="font-serif text-2xl text-[#e9b85f]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="text-sm leading-7 text-white/85">
+                  {highlight}
+                </span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Itinerary */}
-      <section className="py-16 sm:py-24">
+      {/* DAY-BY-DAY ITINERARY */}
+      <section className="py-16 sm:py-20 lg:py-24">
         <div className={container}>
           <div className="max-w-3xl">
-            <p className={`${eyebrow} text-[#856326]`}>Day by day</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">Your itinerary.</h2>
-            <p className="mt-5 leading-8 text-[#61675e]">This suggested programme is a starting point. We will confirm timings, accommodation, activities, permits and transfers with you before any booking is finalised.</p>
+            <SectionLabel>Day by day</SectionLabel>
+            <h2 className="mt-5 font-serif text-4xl tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+              Your itinerary.
+            </h2>
+            <p className="mt-5 text-sm leading-7 text-[#647067] sm:text-base sm:leading-8">
+              Explore the proposed programme for your stay. We&apos;ll
+              confirm activities, timings, accommodation, permits, and
+              transfers with you before bookings are finalised.
+            </p>
           </div>
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_0.72fr]">
+
+          <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_0.72fr] lg:gap-14">
             <div className="relative">
-              <div className="absolute bottom-8 left-[19px] top-8 w-px bg-[#173d25]/20" />
+              <div className="absolute bottom-8 left-5 top-8 w-px bg-[#153b30]/20" />
+
               <div className="space-y-4">
                 {journey.itinerary.map((step, index) => (
-                  <article key={`${journey.id}-${step.day}`} className="relative grid grid-cols-[40px_1fr] gap-4">
-                    <div className="z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#d3a33d] bg-[#f1eee6] font-serif text-sm">{String(index + 1).padStart(2, "0")}</div>
-                    <div className="border border-[#173d25]/10 bg-white p-5 sm:p-7">
-                      <p className={`${eyebrow} text-[#856326]`}>{step.day}</p>
-                      <h3 className="mt-3 font-serif text-2xl sm:text-3xl">{step.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-[#61675e]">{step.description}</p>
+                  <article
+                    key={`${journey.id}-${step.day}`}
+                    className="relative grid grid-cols-[40px_1fr] gap-4 sm:grid-cols-[44px_1fr] sm:gap-5"
+                  >
+                    <div className="z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#d3a33d] bg-[#f7f5ee] font-serif text-sm sm:h-11 sm:w-11">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+
+                    <div className="border border-[#e4e0d6] bg-white p-5 transition hover:border-[#d3a33d] sm:p-7">
+                      <p className={`${eyebrow} text-[#a8752b]`}>
+                        {step.day}
+                      </p>
+                      <h3 className="mt-3 font-serif text-2xl leading-snug sm:text-3xl">
+                        {step.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-7 text-[#647067]">
+                        {step.description}
+                      </p>
                     </div>
                   </article>
                 ))}
               </div>
             </div>
-            <aside className="self-start lg:sticky lg:top-8">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#173d25]">
-                <Image src={gallery[Math.min(2, gallery.length - 1)]} alt={`Landscape for ${journey.title}`} fill unoptimized sizes="(max-width: 1023px) 100vw, 40vw" className="object-cover" />
+
+            <aside className="lg:sticky lg:top-8">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#dce2d6]">
+                <Image
+                  src={gallery[Math.min(2, gallery.length - 1)]}
+                  alt={`Scenery from ${journey.title}`}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1023px) 100vw, 40vw"
+                  className="object-cover"
+                />
               </div>
-              <div className="bg-white p-6 sm:p-8">
-                <p className={`${eyebrow} text-[#856326]`}>The route</p>
-                <h3 className="mt-3 font-serif text-2xl">Across Rwanda</h3>
-                <p className="mt-3 text-sm leading-7 text-[#61675e]">{journey.route}</p>
-                <div className="mt-5 border-t border-[#173d25]/10 pt-5"><p className={`${eyebrow} text-[#856326]`}>Accommodation</p><p className="mt-3 text-sm leading-7 text-[#61675e]">{journey.accommodation}</p></div>
+
+              <div className="border border-t-0 border-[#e4e0d6] bg-white p-6 sm:p-8">
+                <SectionLabel>Explore the route</SectionLabel>
+
+                <h3 className="mt-4 font-serif text-2xl sm:text-3xl">
+                  Across Rwanda.
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-[#647067]">
+                  {journey.route}
+                </p>
+
+                <div className="mt-6 border-t border-[#153b30]/10 pt-5">
+                  <p className={`${eyebrow} text-[#a8752b]`}>
+                    Accommodation
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[#647067]">
+                    {journey.accommodation}
+                  </p>
+                </div>
               </div>
             </aside>
           </div>
         </div>
       </section>
 
-      {/* Planning checklist */}
-      <section className="bg-[#e6e1d6] py-14 sm:py-20">
-        <div className={`${container} grid gap-10 md:grid-cols-2`}>
-          <div><p className={`${eyebrow} text-[#856326]`}>Before you travel</p><h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">Clear details.<br />A smoother journey.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-[#61675e]">Your personalised proposal will clearly outline what is included and what is not, based on your selected services and travel dates.</p></div>
+      {/* PLANNING DETAILS */}
+      <section className="bg-[#efede4] py-16 sm:py-20">
+        <div className={`${container} grid gap-10 md:grid-cols-2 md:gap-16`}>
+          <div>
+            <SectionLabel>Travel with confidence</SectionLabel>
+
+            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-[-0.035em] sm:text-5xl">
+              The details matter.
+              <br />
+              We help you plan.
+            </h2>
+
+            <p className="mt-5 max-w-lg text-sm leading-7 text-[#647067]">
+              Every traveller has different priorities. Your proposal will
+              outline the arrangements and costs relevant to your chosen
+              itinerary before anything is confirmed.
+            </p>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="bg-white p-5 sm:p-6"><h3 className="font-serif text-2xl">To confirm</h3><ul className="mt-4 space-y-3 text-sm leading-6 text-[#61675e]"><li>✓ Accommodation and meal plan</li><li>✓ Transfers and transport</li><li>✓ Activities, park fees and permits</li><li>✓ Final price and availability</li></ul></div>
-            <div className="bg-white p-5 sm:p-6"><h3 className="font-serif text-2xl">Personalise</h3><ul className="mt-4 space-y-3 text-sm leading-6 text-[#61675e]"><li>✓ Travel dates and group size</li><li>✓ Preferred accommodation</li><li>✓ Pace and optional experiences</li><li>✓ Dietary or special requests</li></ul></div>
+            <div className="border border-[#e4e0d6] bg-white p-5 sm:p-6">
+              <h3 className="font-serif text-2xl">To confirm</h3>
+              <ul className="mt-5 space-y-4 text-sm leading-6 text-[#647067]">
+                <li>Accommodation and meals</li>
+                <li>Transfers and transport</li>
+                <li>Activities, park fees, and permits</li>
+                <li>Final price and availability</li>
+              </ul>
+            </div>
+
+            <div className="border border-[#e4e0d6] bg-white p-5 sm:p-6">
+              <h3 className="font-serif text-2xl">Your preferences</h3>
+              <ul className="mt-5 space-y-4 text-sm leading-6 text-[#647067]">
+                <li>Travel dates and group size</li>
+                <li>Preferred accommodation</li>
+                <li>Optional experiences</li>
+                <li>Dietary and special requests</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Final enquiry */}
-      <section className="bg-[#12372a] py-14 text-white sm:py-20">
-        <div className={`${container} grid gap-8 md:grid-cols-[1fr_auto] md:items-center`}>
-          <div><p className={`${eyebrow} text-[#e4bc64]`}>Start your journey</p><h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">Let’s make this journey yours.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-white/70">Tell us when you want to travel and what matters most. We will help you confirm the details.</p></div>
-          <Link href={`/enquire?tour=${journey.id}`} className={`inline-flex min-h-12 items-center justify-center bg-[#e4bc64] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#173d25] transition hover:bg-white ${focus}`}>Enquire now ↗</Link>
+      {/* FINAL CTA */}
+      <section className="relative isolate overflow-hidden bg-[#082c22]">
+        <Image
+          src={gallery[0]}
+          alt=""
+          fill
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-[#082c22]/95 via-[#082c22]/90 to-[#082c22]/75" />
+
+        <div
+          className={`${container} relative grid gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_auto] lg:items-center lg:py-24`}
+        >
+          <div className="max-w-3xl">
+            <SectionLabel>Start your journey</SectionLabel>
+
+            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-[-0.035em] text-[#fffdf7] sm:text-5xl lg:text-6xl">
+              Let&apos;s make this journey yours.
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">
+              Tell us when you want to travel and what you&apos;d love to
+              experience. We&apos;ll help you take the next step.
+            </p>
+          </div>
+
+          <a
+            href={whatsapp(journey.title)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex min-h-14 w-fit items-center justify-center gap-4 bg-[#e9b85f] px-7 py-4 text-sm font-semibold text-[#153b30] transition hover:bg-[#f2cc83] sm:px-9 ${focus}`}
+          >
+            Plan your trip
+            <ArrowIcon className="h-5 w-5" />
+          </a>
         </div>
       </section>
 
-      {/* Persistent tour enquiry bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#211f1f] text-white shadow-[0_-8px_30px_rgba(0,0,0,0.18)]">
-        <div className={`${container} flex min-h-[78px] items-center justify-between gap-4 py-3`}>
-          <div className="flex min-w-0 flex-wrap items-center gap-x-8 gap-y-2 sm:gap-x-10">
+      {/* FIXED ENQUIRY BAR */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#153b30] text-white shadow-[0_-8px_30px_rgba(0,0,0,0.14)]">
+        <div
+          className={`${container} flex min-h-[76px] items-center justify-between gap-4 py-3`}
+        >
+          <div className="flex min-w-0 flex-wrap items-center gap-x-6 gap-y-1 sm:gap-x-10">
             <div>
-              <p className="font-serif text-lg sm:text-xl">{journey.nights}</p>
-              <p className="text-[10px] uppercase tracking-wider text-white/70">Nights</p>
+              <p className="font-serif text-xl">{journey.nights}</p>
+              <p className="text-[9px] uppercase tracking-[0.16em] text-white/65">
+                Nights
+              </p>
             </div>
+
             <div>
-              <p className="font-serif text-lg sm:text-xl">{journey.route.split("·").map((part) => part.trim()).filter(Boolean).length}</p>
-              <p className="text-[10px] uppercase tracking-wider text-white/70">Stops</p>
+              <p className="font-serif text-xl">{routeStops.length}</p>
+              <p className="text-[9px] uppercase tracking-[0.16em] text-white/65">
+                Stops
+              </p>
             </div>
-            <div className="hidden min-w-0 sm:block">
-              <p className="font-serif text-lg sm:text-xl">USD {journey.price}</p>
-              <p className="text-[10px] text-white/70">Indicative price, per person</p>
+
+            <div className="hidden sm:block">
+              <p className="font-serif text-lg">Your Rwanda journey</p>
+              <p className="text-[10px] text-white/65">
+                Personalise your itinerary
+              </p>
             </div>
           </div>
-          <Link href={`/enquire?tour=${journey.id}`} className={`inline-flex min-h-12 shrink-0 items-center justify-center bg-[#ff6900] px-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#171717] transition hover:bg-[#ff8b38] sm:px-8 ${focus}`}>
-            Enquire <span aria-hidden="true" className="ml-2">↗</span>
-          </Link>
+
+          <a
+            href={whatsapp(journey.title)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex min-h-12 shrink-0 items-center justify-center gap-2 bg-[#e9b85f] px-5 text-[10px] font-bold uppercase tracking-[0.13em] text-[#153b30] transition hover:bg-[#f2cc83] sm:px-7 sm:text-xs ${focus}`}
+          >
+            Enquire
+            <ArrowIcon className="h-4 w-4" />
+          </a>
         </div>
       </div>
-      <div aria-hidden="true" className="h-24 sm:h-28" />
     </main>
   );
 }

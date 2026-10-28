@@ -1,134 +1,110 @@
 
-import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Travel Services in Rwanda | Karisoke Concierge",
   description:
-    "Discover personalized travel planning, accommodation, airport transfers, gorilla trekking, wildlife safaris, cultural experiences, and travel assistance across Rwanda.",
+    "Plan your Rwanda adventure with personalized travel services, accommodation, gorilla trekking, wildlife safaris, transport, cultural experiences, and local support.",
   alternates: {
     canonical: "/services",
   },
 };
 
-const featuredServices = [
+const services = [
   {
     number: "01",
     category: "STAY",
-    title: "Find your perfect stay",
+    title: "Hotels & accommodation",
     description:
-      "From stylish Kigali hotels to peaceful lakeside retreats and wilderness lodges, find a place that fits your journey.",
-    tags: ["Hotels", "Safari lodges", "Lake Kivu"],
-    symbol: "⌂",
-    background: "bg-[#e9e5d9]",
-    accent: "text-[#53684d]",
+      "From intimate boutique hotels to luxury lodges and peaceful lakeside retreats, find a stay that suits your journey.",
+    image: "/images/services/accommodation.jpg",
+    alt: "Beautiful accommodation overlooking Rwanda's green hills",
   },
   {
     number: "02",
-    category: "EXPLORE",
-    title: "Discover the wild",
+    category: "TRANSPORT",
+    title: "Airport transfers & transport",
     description:
-      "Plan unforgettable encounters with Rwanda’s wildlife, mountain landscapes, and remarkable national parks.",
-    tags: ["Gorilla trekking", "Safaris", "Hiking"],
-    symbol: "✳",
-    background: "bg-[#dce4d6]",
-    accent: "text-[#31553a]",
+      "Arrive comfortably with airport pickup, private transfers, and transport arranged around your itinerary.",
+    image: "/images/services/transport.jpg",
+    alt: "Airport and travel transport services",
   },
   {
     number: "03",
-    category: "CONNECT",
-    title: "Experience local life",
+    category: "ADVENTURE",
+    title: "Gorilla trekking & permits",
     description:
-      "Explore Rwandan culture, cuisine, art, markets, and meaningful experiences beyond the usual tourist stops.",
-    tags: ["Culture", "Food", "Local guides"],
-    symbol: "◇",
-    background: "bg-[#efe0c6]",
-    accent: "text-[#8a682e]",
+      "Prepare for an unforgettable encounter with Rwanda's mountain gorillas, with help coordinating the details.",
+    image: "/images/services/gorilla-trekking.jpg",
+    alt: "Mountain gorilla in Rwanda's lush forest",
   },
   {
     number: "04",
-    category: "GET AROUND",
-    title: "Travel with ease",
+    category: "WILDLIFE",
+    title: "Safaris & national parks",
     description:
-      "Coordinate airport pickups, private transport, intercity journeys, and the practical details between destinations.",
-    tags: ["Airport transfers", "Drivers", "Day trips"],
-    symbol: "↗",
-    background: "bg-[#dfe7e7]",
-    accent: "text-[#3f6868]",
-  },
-];
-
-const additionalServices = [
-  {
-    title: "Personalized itineraries",
-    description:
-      "A practical travel plan shaped around your dates, interests, and pace.",
+      "Discover Akagera's wildlife, Nyungwe's forests, and Rwanda's extraordinary natural landscapes.",
+    image: "/images/services/wildlife-safari.jpg",
+    alt: "Wildlife roaming through Rwanda's savannah",
   },
   {
-    title: "Gorilla trekking arrangements",
+    number: "05",
+    category: "CULTURE",
+    title: "Culture & local experiences",
     description:
-      "Help planning Volcanoes National Park visits, transport, accommodation, and official permit requirements.",
+      "Meet local communities, explore Rwandan traditions, taste local cuisine, and discover the country's heritage.",
+    image: "/images/services/culture.jpg",
+    alt: "Local cultural experience in Rwanda",
   },
   {
-    title: "Wildlife & nature excursions",
-    description:
-      "Explore Akagera, Nyungwe, birdwatching, forest walks, and scenic landscapes.",
-  },
-  {
-    title: "Kigali city experiences",
-    description:
-      "Discover museums, art spaces, markets, restaurants, and city highlights.",
-  },
-  {
-    title: "Dining & special occasions",
-    description:
-      "Find dining options and coordinate memorable celebrations during your stay.",
-  },
-  {
+    number: "06",
+    category: "RELAX",
     title: "Lake Kivu escapes",
     description:
-      "Plan lakeside stays, relaxation, scenic drives, and activities around Rubavu or Karongi.",
+      "Slow down beside beautiful waters, enjoy lakeside stays, and explore the peaceful towns along Lake Kivu.",
+    image: "/images/services/lake-kivu.jpg",
+    alt: "Lake Kivu surrounded by Rwanda's green hills",
   },
   {
-    title: "Family & group travel",
+    number: "07",
+    category: "CITY LIFE",
+    title: "Kigali city experiences",
     description:
-      "Coordinate shared itineraries, accommodation, activities, and transport for your group.",
+      "Explore Kigali's restaurants, markets, art spaces, cafés, and important cultural landmarks.",
+    image: "/images/services/kigali.jpg",
+    alt: "Panoramic view of Kigali city",
   },
   {
-    title: "Business travel assistance",
+    number: "08",
+    category: "TRAVEL SUPPORT",
+    title: "Essentials & local assistance",
     description:
-      "Arrange travel logistics around meetings, conferences, and professional events.",
-  },
-  {
-    title: "Travel essentials",
-    description:
-      "Find official entry information and guidance on connectivity, local currency, and practical preparations.",
-  },
-  {
-    title: "On-trip & departure support",
-    description:
-      "Get help coordinating itinerary changes, additional activities, and your return airport transfer.",
+      "Get practical guidance on connectivity, local currency, entry requirements, and the details that make travel easier.",
+    image: "/images/services/travel-support.jpg",
+    alt: "Traveler planning a Rwanda itinerary",
   },
 ];
 
-const stages = [
+const planningSteps = [
   {
     number: "01",
-    title: "Tell us your plans",
+    title: "Tell us about your trip",
     description:
-      "Share your dates, interests, travel style, and what you hope to experience.",
+      "Share your dates, interests, travel style, group size, and the experiences you hope to enjoy.",
   },
   {
     number: "02",
-    title: "Shape your journey",
+    title: "We coordinate the details",
     description:
-      "We help bring the destinations, stays, transport, and activities together.",
+      "We help bring together suitable stays, transport, activities, and local arrangements for your journey.",
   },
   {
     number: "03",
-    title: "Explore Rwanda",
+    title: "Experience Rwanda",
     description:
-      "Travel with a plan that feels personal, practical, and made for you.",
+      "Travel with a clearer plan and spend more time enjoying the places, people, and experiences that matter.",
   },
 ];
 
@@ -139,195 +115,192 @@ function ArrowIcon({ className = "" }: { className?: string }) {
       viewBox="0 0 24 24"
       fill="none"
       className={className}
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
+      <path
+        d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
+  );
+}
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-4 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#a8752b] sm:text-xs">
+      <span>{children}</span>
+      <span className="h-px w-10 bg-[#bd914f]" />
+    </div>
   );
 }
 
 export default function ServicesPage() {
   return (
-    <main className="overflow-hidden bg-[#faf9f5] text-[#203b29]">
+    <main className="overflow-hidden bg-[#f7f5ee] text-[#153b30]">
       {/* HERO */}
-      <section className="relative isolate min-h-[590px] overflow-hidden bg-[#173d25] sm:min-h-[650px] lg:min-h-[700px]">
-        {/* Decorative landscape-inspired background */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_80%_25%,rgba(194,173,119,0.28),transparent_32%),radial-gradient(ellipse_at_72%_80%,rgba(94,124,78,0.55),transparent_42%),linear-gradient(120deg,#173d25_10%,#244b32_55%,#65765a_100%)]"
+      <section className="relative isolate flex min-h-[570px] items-center overflow-hidden bg-[#092c23] sm:min-h-[620px] lg:min-h-[650px]">
+        <Image
+          src="/images/services/rwanda-hero.jpg"
+          alt="A traveler overlooking Rwanda's beautiful lakes and green hills"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
 
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 top-20 -z-10 h-[420px] w-[420px] rounded-full border border-white/10 sm:h-[570px] sm:w-[570px]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -right-12 top-32 -z-10 h-[330px] w-[330px] rounded-full border border-white/10 sm:h-[470px] sm:w-[470px]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute bottom-0 right-0 -z-10 h-1/2 w-full bg-gradient-to-t from-[#102b1b]/60 to-transparent"
-        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#06291f]/95 via-[#092e24]/75 to-[#092e24]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#092e24]/40 via-transparent to-black/10" />
 
-        <div className="mx-auto flex min-h-[590px] max-w-[1600px] flex-col justify-center px-5 py-20 sm:min-h-[650px] sm:px-10 lg:min-h-[700px] lg:px-20">
-          <div className="max-w-3xl">
-            <div className="mb-7 flex items-center gap-3">
-              <span className="h-px w-10 bg-[#d8c28c]" />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#e7d7ac] sm:text-xs">
-                The Karisoke experience
-              </p>
-            </div>
+        <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
+          <div className="max-w-2xl">
+            <Eyebrow>Travel services</Eyebrow>
 
-            <h1 className="max-w-3xl font-serif text-5xl leading-[1.08] tracking-[-0.045em] text-[#faf9f5] sm:text-6xl lg:text-8xl">
-              Rwanda, made
-              <span className="block font-normal italic text-[#dfcea0]">
-                personal.
-              </span>
+            <h1 className="font-serif text-4xl leading-[1.08] tracking-[-0.04em] text-[#fffdf7] sm:text-5xl md:text-6xl lg:text-7xl">
+              Everything you need for your Rwanda journey.
             </h1>
 
-            <p className="mt-7 max-w-xl text-base leading-8 text-white/80 sm:text-lg">
-              A remarkable journey is made of many little details. From where
-              you stay to what you discover, we help bring your Rwanda
-              experience together, around you.
+            <p className="mt-6 max-w-lg text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
+              From the moment you start planning until the day you depart, we
+              help bring the details together. Tell us what you need, and
+              we&apos;ll help coordinate your stay, transport, activities, and
+              local arrangements.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/enquire"
-                className="inline-flex min-h-14 items-center justify-center gap-4 bg-[#e3d0a0] px-7 py-4 text-sm font-semibold text-[#173d25] transition hover:bg-[#f0e3bd]"
-              >
-                Plan your journey
-                <ArrowIcon className="h-4 w-4" />
-              </Link>
+            <Link
+              href="/enquire"
+              className="mt-8 inline-flex min-h-12 items-center justify-center gap-4 rounded-sm bg-[#e9b85f] px-7 py-3 text-sm font-semibold text-[#153629] transition hover:bg-[#f3cc83] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e9b85f]"
+            >
+              Plan your trip
+              <ArrowIcon className="h-5 w-5" />
+            </Link>
 
-              <Link
-                href="#our-services"
-                className="inline-flex min-h-14 items-center justify-center border border-white/35 px-7 py-4 text-sm font-medium text-white transition hover:bg-white/10"
-              >
-                Discover our services
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/20 pt-6 text-[10px] font-medium uppercase tracking-[0.2em] text-white/70 sm:mt-20">
-            <span>Thoughtful planning</span>
-            <span className="hidden h-1 w-1 rounded-full bg-[#d8c28c] sm:block" />
-            <span>Local experiences</span>
-            <span className="hidden h-1 w-1 rounded-full bg-[#d8c28c] sm:block" />
-            <span>Across Rwanda</span>
+            <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-white/65">
+              Personalised planning · Local knowledge · Rwanda experiences
+            </p>
           </div>
         </div>
 
-        <div className="absolute bottom-12 right-8 hidden max-w-[190px] text-right lg:block">
-          <p className="font-serif text-xl italic text-white/80">
-            The land of a thousand hills
-          </p>
-          <p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-[#e3d0a0]">
-            Welcome to Rwanda
-          </p>
+        <div className="absolute bottom-7 right-6 hidden max-w-56 -rotate-6 text-right font-serif text-xl italic leading-snug text-[#f2cb83] lg:block">
+          Real places.
+          <br />
+          Local knowledge.
+          <br />
+          Unforgettable journeys.
         </div>
       </section>
 
       {/* INTRODUCTION */}
-      <section className="mx-auto grid max-w-[1400px] gap-8 px-5 py-20 sm:px-10 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-20 lg:px-20 lg:py-28">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#907025]">
-            More than a booking
-          </p>
-          <h2 className="mt-5 max-w-xl font-serif text-4xl leading-tight tracking-[-0.035em] sm:text-5xl">
-            The details matter.
-            <span className="block italic text-[#75856d]">
-              We help connect them.
-            </span>
+      <section className="mx-auto grid max-w-[1400px] items-center gap-10 px-6 py-16 sm:px-10 sm:py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-16 lg:py-24">
+        <div className="max-w-lg">
+          <Eyebrow>Our approach</Eyebrow>
+
+          <h2 className="font-serif text-3xl leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl">
+            Thoughtful support for every step of your trip.
           </h2>
+
+          <p className="mt-6 text-sm leading-7 text-[#58655e] sm:text-base sm:leading-8">
+            Whether this is your first visit or a return to Rwanda, we help
+            you navigate the details so you can focus on the moments that
+            make your journey meaningful.
+          </p>
+
+          <Link
+            href="/enquire"
+            className="mt-7 inline-flex items-center gap-3 border-b border-[#b58b4b] pb-2 text-sm font-semibold transition hover:text-[#a8752b]"
+          >
+            Tell us what you need
+            <ArrowIcon className="h-4 w-4" />
+          </Link>
         </div>
 
-        <div className="max-w-2xl lg:pb-2">
-          <p className="text-base leading-8 text-[#59665a] sm:text-lg">
-            Visiting a new country brings plenty of questions. Where should
-            you stay? How do you get between destinations? Which experiences
-            belong on your itinerary? Karisoke Concierge helps you explore
-            your options and coordinate the details, so your trip feels less
-            complicated and more your own.
+        <div className="relative min-h-[270px] overflow-hidden rounded-sm sm:min-h-[360px]">
+          <Image
+            src="/images/services/gorilla-banner.jpg"
+            alt="Mountain gorilla in Rwanda's lush natural habitat"
+            fill
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            className="object-cover"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/30" />
+
+          <p className="absolute bottom-6 right-6 max-w-48 text-right font-serif text-xl italic leading-snug text-white drop-shadow sm:bottom-8 sm:right-8 sm:text-2xl">
+            Extraordinary experiences.
+            <br />
+            Made personal.
           </p>
         </div>
       </section>
 
-      {/* FEATURED SERVICES */}
+      {/* SERVICE DIRECTORY */}
       <section
         id="our-services"
-        className="scroll-mt-24 border-y border-[#203b29]/10 bg-[#f0eee6] py-20 sm:py-24 lg:py-28"
+        className="border-y border-[#e5e0d5] bg-[#f0eee5] py-16 sm:py-20 lg:py-24"
       >
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-20">
-          <div className="mb-12 flex flex-col justify-between gap-5 sm:mb-16 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#907025]">
-                How we can help
-              </p>
-              <h2 className="mt-4 max-w-2xl font-serif text-4xl tracking-[-0.035em] sm:text-5xl">
-                Your journey, from every angle.
+        <div className="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16">
+          <div className="mb-10 flex flex-col justify-between gap-7 lg:mb-14 lg:flex-row lg:items-end">
+            <div className="max-w-xl">
+              <Eyebrow>Featured services</Eyebrow>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl">
+                Find what your Rwanda journey needs.
               </h2>
+              <p className="mt-4 max-w-lg text-sm leading-7 text-[#647067]">
+                Explore the services we can help arrange, from your first
+                airport pickup to your final day in Rwanda.
+              </p>
             </div>
 
-            <p className="max-w-sm text-sm leading-7 text-[#657064]">
-              Choose what you need, or let us help you bring the whole
-              experience together.
-            </p>
+            <Link
+              href="/enquire"
+              className="inline-flex w-fit items-center gap-3 border-b border-[#b58b4b] pb-2 text-sm font-semibold"
+            >
+              Plan a personalised trip
+              <ArrowIcon className="h-4 w-4" />
+            </Link>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {featuredServices.map((service) => (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {services.map((service) => (
               <article
                 key={service.number}
-                className="group flex flex-col border border-[#203b29]/10 bg-[#faf9f5] transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#203b29]/5"
+                className="group flex flex-col overflow-hidden border border-[#e4e0d6] bg-[#fbfaf6] transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#153b30]/[0.08]"
               >
-                <div
-                  className={`relative flex h-48 items-center justify-center overflow-hidden ${service.background}`}
+                <Link
+                  href={`/enquire?service=${encodeURIComponent(service.title)}`}
+                  aria-label={`Enquire about ${service.title}`}
+                  className="relative block aspect-[5/3] overflow-hidden bg-[#d9dfd3]"
                 >
-                  <span
-                    aria-hidden="true"
-                    className={`font-serif text-[112px] leading-none opacity-25 transition duration-500 group-hover:scale-110 ${service.accent}`}
-                  >
-                    {service.symbol}
-                  </span>
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
 
-                  <span className="absolute left-5 top-5 text-[10px] font-semibold tracking-[0.2em] text-[#203b29]/65">
-                    {service.number}
-                  </span>
-
-                  <span className="absolute bottom-5 left-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#203b29]/75">
+                  <span className="absolute left-3 top-3 bg-[#f7f5ee]/95 px-3 py-1.5 text-[9px] font-semibold tracking-[0.17em] text-[#234535]">
                     {service.category}
                   </span>
-                </div>
+                </Link>
 
-                <div className="flex flex-1 flex-col p-6 sm:p-7">
-                  <h3 className="font-serif text-2xl leading-snug">
+                <div className="flex flex-1 flex-col p-5 sm:p-5">
+                  <span className="mb-3 text-[10px] tracking-[0.2em] text-[#a8752b]">
+                    SERVICE {service.number}
+                  </span>
+
+                  <h3 className="font-serif text-xl leading-snug tracking-[-0.02em]">
                     {service.title}
                   </h3>
 
-                  <p className="mt-4 flex-1 text-sm leading-7 text-[#657064]">
+                  <p className="mt-3 flex-1 text-xs leading-6 text-[#667169] sm:text-sm">
                     {service.description}
                   </p>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {service.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="border border-[#203b29]/10 px-2.5 py-1.5 text-[10px] text-[#59665a]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
                   <Link
-                    href="/enquire"
-                    className="mt-7 inline-flex items-center justify-between border-t border-[#203b29]/10 pt-5 text-sm font-semibold transition-colors hover:text-[#907025]"
+                    href={`/enquire?service=${encodeURIComponent(service.title)}`}
+                    className="mt-5 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#234535] transition hover:text-[#a8752b]"
                   >
                     Explore this service
                     <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -339,134 +312,114 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ADDITIONAL SERVICES */}
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-10 sm:py-24 lg:px-20 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#907025]">
-              The finer details
-            </p>
+      {/* HOW IT WORKS */}
+      <section
+        id="how-it-works"
+        className="grid lg:grid-cols-2"
+      >
+        <div className="relative isolate flex min-h-[440px] items-center overflow-hidden bg-[#082c22] px-6 py-16 sm:px-10 lg:min-h-[570px] lg:px-16 lg:py-20">
+          <Image
+            src="/images/services/rwanda-hills.jpg"
+            alt="Rolling green hills in Rwanda at sunset"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+          />
 
-            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-[-0.035em] sm:text-5xl">
-              And everything
-              <span className="block italic text-[#75856d]">
-                in between.
-              </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#06291f]/95 via-[#092e24]/75 to-[#092e24]/45" />
+
+          <div className="relative max-w-lg">
+            <Eyebrow>Your journey</Eyebrow>
+
+            <h2 className="font-serif text-4xl leading-tight tracking-[-0.035em] text-[#fffdf7] sm:text-5xl">
+              Simple steps.
+              <br />
+              A seamless experience.
             </h2>
 
-            <p className="mt-6 max-w-md text-base leading-8 text-[#657064]">
-              Sometimes it is the little things that make travelling easier.
-              Explore more ways we can help you prepare, discover, and enjoy
-              your time in Rwanda.
+            <p className="mt-5 max-w-sm text-sm leading-7 text-white/80">
+              Your trip should feel exciting, not complicated. Here&apos;s
+              how we help you prepare for Rwanda.
             </p>
 
             <Link
               href="/enquire"
-              className="mt-8 inline-flex items-center gap-3 border-b border-[#907025] pb-2 text-sm font-semibold text-[#203b29] transition-colors hover:text-[#907025]"
+              className="mt-8 inline-flex min-h-12 items-center gap-4 rounded-sm bg-[#e9b85f] px-6 py-3 text-sm font-semibold text-[#153629] transition hover:bg-[#f3cc83]"
             >
-              Tell us what you need
-              <ArrowIcon className="h-4 w-4" />
+              Start planning
+              <ArrowIcon className="h-5 w-5" />
             </Link>
           </div>
+        </div>
 
-          <div className="divide-y divide-[#203b29]/15 border-t border-[#203b29]/15">
-            {additionalServices.map((service, index) => (
-              <Link
-                href="/enquire"
-                key={service.title}
-                className="group grid gap-3 py-6 transition-colors hover:bg-[#f0eee6]/60 sm:grid-cols-[45px_1fr_24px] sm:items-center sm:gap-5 sm:px-4"
+        <div className="flex items-center px-6 py-16 sm:px-10 lg:px-14 lg:py-20 xl:px-20">
+          <div className="w-full">
+            {planningSteps.map((step, index) => (
+              <div
+                key={step.number}
+                className={`grid grid-cols-[48px_1fr] gap-5 py-7 sm:grid-cols-[60px_1fr] sm:gap-7 ${
+                  index !== planningSteps.length - 1
+                    ? "border-b border-[#ded8c9]"
+                    : ""
+                } ${index === 0 ? "pt-0" : ""} ${
+                  index === planningSteps.length - 1 ? "pb-0" : ""
+                }`}
               >
-                <span className="text-xs tracking-widest text-[#a48b51]">
-                  {String(index + 5).padStart(2, "0")}
-                </span>
+                <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#bc914e] font-serif text-lg text-[#a8752b] sm:h-14 sm:w-14">
+                  {step.number}
+                </div>
 
-                <span>
-                  <span className="block font-serif text-xl transition-colors group-hover:text-[#907025] sm:text-2xl">
-                    {service.title}
-                  </span>
-                  <span className="mt-2 block max-w-2xl text-sm leading-7 text-[#657064]">
-                    {service.description}
-                  </span>
-                </span>
+                <div>
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#a8752b]">
+                    Step {step.number}
+                  </p>
 
-                <ArrowIcon className="hidden h-4 w-4 text-[#907025] transition-transform group-hover:translate-x-1 sm:block" />
-              </Link>
+                  <h3 className="font-serif text-2xl leading-tight tracking-[-0.025em] sm:text-3xl">
+                    {step.title}
+                  </h3>
+
+                  <p className="mt-3 max-w-md text-sm leading-7 text-[#647067]">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section
-        id="how-it-works"
-        className="bg-[#e9e7dc] px-5 py-20 sm:px-10 sm:py-24 lg:px-20 lg:py-28"
-      >
-        <div className="mx-auto max-w-[1400px]">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#907025]">
-              Simple by design
-            </p>
-            <h2 className="mt-5 font-serif text-4xl tracking-[-0.035em] sm:text-5xl">
-              From first idea to final day.
-            </h2>
-            <p className="mt-5 text-sm leading-7 text-[#657064] sm:text-base">
-              Start with a conversation. We’ll help you work out the details
-              that make your trip yours.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-20">
-            {stages.map((stage) => (
-              <article key={stage.number} className="relative border-t border-[#203b29]/25 pt-6">
-                <span className="font-serif text-4xl italic text-[#a48b51]">
-                  {stage.number}
-                </span>
-
-                <h3 className="mt-5 font-serif text-2xl">
-                  {stage.title}
-                </h3>
-
-                <p className="mt-3 max-w-sm text-sm leading-7 text-[#657064]">
-                  {stage.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CALL TO ACTION */}
-      <section className="relative overflow-hidden bg-[#173d25] px-5 py-20 sm:px-10 sm:py-24 lg:px-20 lg:py-28">
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 -top-40 h-[400px] w-[400px] rounded-full border border-white/10 sm:h-[550px] sm:w-[550px]"
+      {/* FINAL CTA */}
+      <section className="relative isolate overflow-hidden bg-[#082c22]">
+        <Image
+          src="/images/services/rwanda-sunset.jpg"
+          alt="Golden sunset over Rwanda's scenic landscape"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
         />
 
-        <div className="relative mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-9 lg:flex-row lg:items-end">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#e3d0a0]">
-              Your Rwanda story starts here
-            </p>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#06271e]/55 via-[#082c22]/85 to-[#082c22]" />
 
-            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-[-0.035em] text-[#faf9f5] sm:text-6xl">
-              Have a place in mind?
-              <span className="mt-2 block italic text-[#dfcea0]">
-                Let’s plan around it.
-              </span>
+        <div className="relative mx-auto grid max-w-[1400px] items-center gap-8 px-6 py-16 sm:px-10 sm:py-20 lg:grid-cols-[1fr_auto] lg:px-16 lg:py-24">
+          <div className="max-w-2xl">
+            <Eyebrow>Ready to plan?</Eyebrow>
+
+            <h2 className="font-serif text-4xl leading-tight tracking-[-0.035em] text-[#fffdf7] sm:text-5xl lg:text-6xl">
+              Let&apos;s create your Rwanda experience.
             </h2>
 
-            <p className="mt-6 max-w-xl text-base leading-8 text-white/75">
-              Whether you know exactly what you want or need help discovering
-              the possibilities, tell us a little about your trip.
+            <p className="mt-5 max-w-lg text-sm leading-7 text-white/75 sm:text-base">
+              Tell us what you have in mind. We&apos;ll help you work out
+              the details and find the experiences that fit your journey.
             </p>
           </div>
 
           <Link
             href="/enquire"
-            className="inline-flex min-h-14 shrink-0 items-center justify-center gap-5 bg-[#e3d0a0] px-7 py-4 text-sm font-semibold text-[#173d25] transition hover:bg-[#f0e3bd] sm:px-9"
+            className="inline-flex min-h-14 w-fit items-center justify-center gap-5 rounded-sm bg-[#e9b85f] px-7 py-4 text-sm font-semibold text-[#153629] transition hover:bg-[#f3cc83] sm:px-9"
           >
-            Plan Your Trip
-            <ArrowIcon className="h-4 w-4" />
+            Plan your trip
+            <ArrowIcon className="h-5 w-5" />
           </Link>
         </div>
       </section>
